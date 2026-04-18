@@ -1,4 +1,5 @@
 import uuid
+import os
 import qrcode
 import io
 import base64
@@ -50,7 +51,8 @@ def create_session(
     db.commit()
     db.refresh(session)
 
-    join_url = f"http://localhost:5173/classroom/join/{token}"
+    frontend_base = os.environ.get("FRONTEND_URL", "http://localhost:5173")
+    join_url = f"{frontend_base}/classroom/join/{token}"
     qr_b64 = make_qr_base64(join_url)
 
     return {
