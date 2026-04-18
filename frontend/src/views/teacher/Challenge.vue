@@ -59,7 +59,7 @@
           >
             <el-card shadow="hover" :body-style="{padding:'8px'}">
               <img
-                :src="'http://localhost:8001/uploads/' + photo.filename"
+                :src="(apiBase) + '/uploads/' + photo.filename"
                 style="width:100%;height:150px;object-fit:cover;border-radius:4px"
               />
               <div style="padding:6px 0;display:flex;justify-content:space-between;align-items:center">
@@ -97,7 +97,7 @@
           <div style="position:relative;display:inline-block;max-width:100%">
             <img
               ref="annotateImg"
-              :src="annotatingPhoto ? 'http://localhost:8001/uploads/' + annotatingPhoto.filename : ''"
+              :src="annotatingPhoto ? apiBase + '/uploads/' + annotatingPhoto.filename : ''"
               style="max-width:100%;max-height:65vh;display:block"
               @load="initCanvas"
             />
@@ -208,9 +208,8 @@
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { ElMessage } from 'element-plus'
 import api from '../../api'
-import { useUserStore } from '../../stores/user'
 
-const userStore = useUserStore()
+const apiBase = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8001'
 const activeTab = ref('r1')
 const sessionId = ref('')
 const sessions = ref([])
@@ -408,7 +407,8 @@ async function saveAnnotation() {
 // ===== 第三关 =====
 function connectWS() {
   if (ws) ws.close()
-  ws = new WebSocket(`ws://localhost:8001/api/challenge/ws/${sessionId.value}/teacher`)
+  const wsBase = apiBase.replace(/^http/, 'ws')
+  ws = new WebSocket(`${wsBase}/api/challenge/ws/${sessionId.value}/teacher`)
   ws.onmessage = (e) => {
     const msg = JSON.parse(e.data)
     if (msg.type === 'r3_buzz' || msg.type === 'r3_result' || msg.type === 'r3_reset') {

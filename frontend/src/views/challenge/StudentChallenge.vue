@@ -263,7 +263,8 @@ async function init() {
 function connectWS() {
   if (!user.value) return
   const clientId = `student_${user.value.id}`
-  ws = new WebSocket(`ws://localhost:8001/api/challenge/ws/${sessionId}/${clientId}`)
+  const wsBase = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:8001').replace(/^http/, 'ws')
+  ws = new WebSocket(`${wsBase}/api/challenge/ws/${sessionId}/${clientId}`)
   ws.onmessage = (e) => {
     const msg = JSON.parse(e.data)
     if (msg.type === 'r3_buzz') {
