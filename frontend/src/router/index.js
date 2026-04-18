@@ -19,6 +19,7 @@ const router = createRouter({
         { path: 'assignments', component: () => import('../views/teacher/Assignments.vue') },
         { path: 'classroom', component: () => import('../views/teacher/Classroom.vue') },
         { path: 'analysis', component: () => import('../views/teacher/Analysis.vue') },
+        { path: 'challenge', component: () => import('../views/teacher/Challenge.vue') },
       ],
     },
 
@@ -38,6 +39,9 @@ const router = createRouter({
 
     // 课堂扫码答题（无需登录）
     { path: '/classroom/join/:token', component: () => import('../views/classroom/Join.vue') },
+
+    // 闯关任务学生端（无需登录，组件内自行处理身份验证）
+    { path: '/challenge/:session_id', component: () => import('../views/challenge/StudentChallenge.vue') },
   ],
 })
 

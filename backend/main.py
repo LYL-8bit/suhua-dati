@@ -3,7 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from database import engine
 import models
 
-from routers import auth, classes, subjects, questions, assignments, submissions, classroom, analysis
+from routers import auth, classes, subjects, questions, assignments, submissions, classroom, analysis, challenge
+from fastapi.staticfiles import StaticFiles
 
 # 创建数据库表
 models.Base.metadata.create_all(bind=engine)
@@ -26,6 +27,9 @@ app.include_router(assignments.router)
 app.include_router(submissions.router)
 app.include_router(classroom.router)
 app.include_router(analysis.router)
+app.include_router(challenge.router)
+
+app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 
 
 @app.get("/")

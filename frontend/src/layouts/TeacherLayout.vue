@@ -35,6 +35,10 @@
           <el-icon><TrendCharts /></el-icon>
           <span>学情分析</span>
         </el-menu-item>
+        <el-menu-item index="/teacher/challenge">
+          <el-icon><Trophy /></el-icon>
+          <span>闯关任务</span>
+        </el-menu-item>
       </el-menu>
     </el-aside>
     <el-container>
@@ -53,7 +57,7 @@
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useUserStore } from '../stores/user'
-import { DataAnalysis, School, Document, Finished, Monitor, TrendCharts } from '@element-plus/icons-vue'
+import { DataAnalysis, School, Document, Finished, Monitor, TrendCharts, Trophy } from '@element-plus/icons-vue'
 
 const route = useRoute()
 const router = useRouter()
