@@ -8,7 +8,8 @@ from sqlalchemy.orm import Session
 from database import get_db
 import models
 
-SECRET_KEY = "suhua-dati-secret-2026"
+import os
+SECRET_KEY = os.environ.get("SECRET_KEY", "suhua-dati-secret-2026")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_HOURS = 24
 
